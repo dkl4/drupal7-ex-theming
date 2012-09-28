@@ -57,6 +57,11 @@ function theming_example_menu() {
  *
  * Defines the theming capabilities provided by this module.
  */
+// In other words, this module says it provides four themeable types of output :
+// - content_array
+// - list
+// - select_form
+// - text_form
 function theming_example_theme() {
   return array(
     'theming_example_content_array' => array(
@@ -99,6 +104,8 @@ function theming_example_theme() {
  * @see form_example_elements.inc
  */
 function theming_example_page() {
+  // Per theme_theming_example_content_array(), the first line here will be in bold,
+  // and the other lines are normal HTML paragraphs.
   $content[] = t('Some examples of pages and forms that are run through theme functions.');
   $content[] = l(t('Simple page with a list'), 'examples/theming_example/theming_example_list_page');
   $content[] = l(t('Simple form 1'), 'examples/theming_example/theming_example_select_form');
@@ -107,4 +114,31 @@ function theming_example_page() {
   // 'render element' => 'element' in hook_theme above.
   $content['#theme_wrappers'] = array('theming_example_content_array');
   return $content;
+}
+
+
+/**
+ * Theme a simple content array.
+ *
+ * This theme function uses the newer recommended format where a single
+ * render array is provided to the theme function.
+ */
+function theme_theming_example_content_array($variables) {
+  $element = $variables['element'];
+  $output = '';
+  // Here is Drupal 7 API docs for element_childre() function :
+  // Identifies the children of an element array, optionally sorted by weight.
+  // The children of a element array are those key/value pairs whose key does
+  // not start with a '#'. See drupal_render() for details.
+  foreach (element_children($element) AS $count) {
+    if (! $count) {
+      // The first paragraph is bolded.
+      $output .= '<p><strong>' . $element[$count] . '</strong></p>';
+    }
+    else {
+      // Following paragraphs are just output as routine paragraphs.
+      $output .= '<p>' . $element[$count] . '</p>';
+    }
+  }
+  return $output;
 }
