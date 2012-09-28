@@ -195,3 +195,35 @@ function theming_example_list_page() {
   );
   return $build;
 }
+
+
+/**
+ * Theming a simple list.
+ *
+ * This is just a simple wrapper around theme('item_list') but it's worth
+ * showing how a custom theme function can be implemented.
+ *
+ * @see theme_item_list()
+ */
+// This is our custom rendition of Drupal's built-in theme_item_list() function.
+function theme_theming_example_list($variables) {
+  $title = $variables['title'];  // Convenience variable
+  $items = $variables['items'];
+
+  // Add the title to the list theme and
+  // state the list type. This defaults to 'ol'.
+  // Add a css class so that you can modify the list styling.
+  // We'll just call Drupal's theme('item_list') to render.
+
+  $variables = array(
+    'items' => $items,
+    'title' => $title,
+    'type' => 'ol',
+    // theming_example.css has the following : ol.theming-example-list { list-style-type: upper-alpha; }
+    'attributes' => array('class' => 'theming-example-list'),
+  );
+  // Our "custom" item list theme function only seems to overwrite the type to 'ol',
+  // apply a class, and then call Drupal's built-in theme function.
+  $output = theme('item_list', $variables);
+  return $output;
+}
