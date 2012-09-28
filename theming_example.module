@@ -52,6 +52,39 @@ function theming_example_menu() {
 }
 
 
+/**
+ * Implements hook_theme().
+ *
+ * Defines the theming capabilities provided by this module.
+ */
+function theming_example_theme() {
+  return array(
+    'theming_example_content_array' => array(
+      // We use 'render element' when the item to be passed is a self-describing
+      // render array (it will have #theme_wrappers)
+      'render element' => 'element',
+    ),
+    'theming_example_list' => array(
+      // We use 'variables' when the item to be passed is an array whose
+      // structure must be described here.
+      'variables' => array(
+        'title' => NULL,
+        'items' => NULL,
+      ),
+    ),
+    'theming_example_select_form'  => array(
+      'render element' => 'form',
+    ),
+    'theming_example_text_form'  => array(
+      'render element' => 'form',
+      // In this one the rendering will be done by a tpl.php file instead of
+      // being rendered by a function, so we specify a template.
+      'template' => 'theming_example_text_form',
+    ),
+  );
+}
+
+
 
 
 /**
@@ -70,6 +103,8 @@ function theming_example_page() {
   $content[] = l(t('Simple page with a list'), 'examples/theming_example/theming_example_list_page');
   $content[] = l(t('Simple form 1'), 'examples/theming_example/theming_example_select_form');
   $content[] = l(t('Simple form 2'), 'examples/theming_example/theming_example_text_form');
+  // Note this is a "self-describing render array" (has #theme_wrappers) which maps to
+  // 'render element' => 'element' in hook_theme above.
   $content['#theme_wrappers'] = array('theming_example_content_array');
   return $content;
 }
