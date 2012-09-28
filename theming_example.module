@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * @file
+ * Explains how a module declares theme functions, preprocess functions, and
+ * templates.
+ *
+ * The underlying approach is that a module should allow themes to do all
+ * rendering, but provide default implementations where appropriate.
+ *
+ * Modules are also expected to leave data as render arrays as long as possible,
+ * leaving rendering to theme functions and templates.
+ */
+
+/**
+ * Implements hook_menu().
+ *
+ * The @link menu_example.module Menu Example @endlink provides extensive
+ * examples for hook_menu().
+ */
+function theming_example_menu() {
+  $items['examples/theming_example'] = array(
+    'title'            => 'Theming Example',
+    'description'      => 'Some theming examples.',
+    'page callback'    => 'theming_example_page',
+    'access callback'  => TRUE,
+    'access arguments' => array('access content'),
+  );
+  $items['examples/theming_example/theming_example_list_page'] = array(
+    'title'            => 'Theming a list',
+    'page callback'    => 'theming_example_list_page',
+    'access arguments' => array('access content'),
+    'weight'           => 1,
+  );
+  $items['examples/theming_example/theming_example_select_form'] = array(
+    'title'            => 'Theming a form (select form)',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('theming_example_select_form'),
+    'access arguments' => array('access content'),
+    'weight'           => 2,
+  );
+  $items['examples/theming_example/theming_example_text_form'] = array(
+    'title'            => 'Theming a form (text form)',
+    'page callback'    => 'drupal_get_form',
+    'page arguments'   => array('theming_example_text_form'),
+    'access arguments' => array('access content'),
+    'weight'           => 3,
+  );
+
+  return $items;
+
+}
