@@ -50,3 +50,26 @@ function theming_example_menu() {
   return $items;
 
 }
+
+
+
+
+/**
+ * Initial landing page explaining the use of the module.
+ *
+ * We create a render array and specify the theme to be used through the use
+ * of #theme_wrappers. With all output, we aim to leave the content as a
+ * render array just as long as possible, so that other modules (or the theme)
+ * can alter it.
+ *
+ * @see render_example.module
+ * @see form_example_elements.inc
+ */
+function theming_example_page() {
+  $content[] = t('Some examples of pages and forms that are run through theme functions.');
+  $content[] = l(t('Simple page with a list'), 'examples/theming_example/theming_example_list_page');
+  $content[] = l(t('Simple form 1'), 'examples/theming_example/theming_example_select_form');
+  $content[] = l(t('Simple form 2'), 'examples/theming_example/theming_example_text_form');
+  $content['#theme_wrappers'] = array('theming_example_content_array');
+  return $content;
+}
