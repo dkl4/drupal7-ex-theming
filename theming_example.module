@@ -227,3 +227,61 @@ function theme_theming_example_list($variables) {
   $output = theme('item_list', $variables);
   return $output;
 }
+
+/**
+ * A simple form that displays a select box and submit button.
+ *
+ * This form will be be themed by the 'THEME_theming_example_select_form' theme
+ * handler below.
+ */
+function theming_example_select_form($form, &$form_state) {
+  $options = array(
+    'newest_first' => t('Newest first'),
+    'newest_last'  => t('Newest last'),
+    'edited_first' => t('Edited first'),
+    'edited_last'  => t('Edited last'),
+    'by_name'      => t('By name'),
+  );
+  $form['choice'] = array(
+    '#type'    => 'select',
+    '#options' => $options,
+    '#title'   => t('Choose which ordering you want'),
+  );
+  $form['submit'] = array(
+    '#type'  => 'submit',
+    '#value' => t('Go'),
+  );
+  return $form;
+}
+
+function theming_example_select_form_submit($form, &$form_state) {
+  drupal_set_message(t('You chose %input', array('%input' => $form_state['values']['choice'])));
+}
+
+/**
+ * Theming a simple form.
+ *
+ * Since our form is named theming_example_select_form(), the default
+ * #theme function applied to is will be 'THEME_theming_example_select_form'
+ * if it exists. The form could also have specified a different
+ * #theme.
+ *
+ * Here we collect the title, theme it manually and
+ * empty the form title. We also wrap the form in a div.
+ */
+// Even if you don't have this theme function, the form looks (and works) fine.
+// This theme function only does a couple things :
+//   - Spruce up the title a bit with <strong><em>
+//   - Putting the 'Go' (Submit) button up on the same line as the drop-down widget.
+function theme_theming_example_select_form($variables) {
+  $form  = $variables['form'];
+  $title = $form['choice']['#title'];
+  $form['choice']['#title'] = '';
+  $output = '<strong><em>' . $title . '</em></strong>';
+  $form['choice']['#prefix'] = '<div class="container-inline">';
+  $form['submit']['#suffix'] = '</div>';
+  $output .= drupal_render_children($form);
+  return $output;
+}
+
+
