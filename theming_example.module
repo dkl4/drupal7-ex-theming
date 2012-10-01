@@ -280,7 +280,7 @@ function theme_theming_example_select_form($variables) {
   $form  = $variables['form'];
   $title = $form['choice']['#title'];
   $form['choice']['#title'] = '';
-  $output = '<strong><em>' . $title . '</em></strong>';
+  $output = '<em><strong>' . $title . '</strong></em>';
   $form['choice']['#prefix'] = '<div class="container-inline">';
   $form['submit']['#suffix'] = '</div>';
   $output .= drupal_render_children($form);
