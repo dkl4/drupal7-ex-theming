@@ -84,6 +84,9 @@ function theming_example_theme() {
       'render element' => 'form',
       // In this one the rendering will be done by a tpl.php file instead of
       // being rendered by a function, so we specify a template.
+      // Because in our hook_theme() implementation, we declare "theming_example_text_form"
+      // will be handled by a .tpl.php file, this is why not having a .tpl.php file
+      // results in an error.
       'template' => 'theming_example_text_form',
     ),
   );
