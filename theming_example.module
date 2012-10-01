@@ -285,3 +285,27 @@ function theme_theming_example_select_form($variables) {
 }
 
 
+/**
+ * A simple form that displays a textfield and submit button.
+ *
+ * This form will be rendered by theme('form') (theme_form() by default)
+ * because we do not provide a theme function for it here.
+ */
+function theming_example_text_form($form, &$form_state) {
+  $form['text'] = array(
+    '#type'     => 'textfield',
+    '#title'    => t('Please input something!'),
+    '#required' => TRUE,
+  );
+  $form['submit'] = array(
+    '#type'  => 'submit',
+    '#value' => t('Go'),
+  );
+  return $form;
+}
+
+function theming_example_text_form_submit($form, &$form_state) {
+  drupal_set_message(t('You entered %input', array('%input' => $form_state['values']['text'])));
+}
+
+
